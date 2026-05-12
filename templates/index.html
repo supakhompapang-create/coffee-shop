@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sip & Still — Coffee</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream: #F5F0E8;
+    --warm-white: #FAF8F4;
+    --brown-dark: #2C1F14;
+    --brown-mid: #6B4C35;
+    --brown-light: #C4A882;
+    --brown-muted: #8B6B52;
+    --accent: #A0522D;
+    --text-secondary: #7A6A5A;
+    --border: rgba(44, 31, 20, 0.12);
+    --border-strong: rgba(44, 31, 20, 0.2);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--warm-white);
+    color: var(--brown-dark);
+    font-size: 15px;
+    line-height: 1.7;
+    font-weight: 300;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.2rem 3rem;
+    background: rgba(250, 248, 244, 0.92);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    font-weight: 300;
+    letter-spacing: 0.05em;
+    color: var(--brown-dark);
+    text-decoration: none;
+  }
+
+  .nav-logo span { font-style: italic; color: var(--brown-mid); }
+
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a {
+    font-size: 0.8rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--brown-dark); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+    justify-content: center; align-items: flex-start;
+    padding: 8rem 3rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute; top: 0; right: 0;
+    width: 45%; height: 100%;
+    background: var(--cream);
+    z-index: 0;
+  }
+
+  .hero-tag {
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--brown-muted);
+    margin-bottom: 1.5rem;
+    position: relative; z-index: 1;
+  }
+
+  .hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3.5rem, 7vw, 6rem);
+    font-weight: 300;
+    line-height: 1.1;
+    max-width: 680px;
+    margin-bottom: 1.5rem;
+    position: relative; z-index: 1;
+  }
+
+  .hero h1 em { font-style: italic; color: var(--brown-mid); }
+
+  .hero-desc {
+    color: var(--text-secondary);
+    max-width: 380px;
+    font-size: 0.95rem;
+    line-height: 1.8;
+    margin-bottom: 2.5rem;
+    position: relative; z-index: 1;
+  }
+
+  .btn-primary {
+    display: inline-block;
+    padding: 0.85rem 2rem;
+    background: var(--brown-dark);
+    color: var(--warm-white);
+    text-decoration: none;
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    transition: background 0.2s, transform 0.15s;
+    position: relative; z-index: 1;
+  }
+  .btn-primary:hover { background: var(--brown-mid); transform: translateY(-1px); }
+
+  .hero-hours {
+    position: absolute;
+    right: 3rem; bottom: 4rem;
+    text-align: right;
+    z-index: 1;
+  }
+  .hero-hours .label {
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--brown-light);
+    margin-bottom: 0.3rem;
+  }
+  .hero-hours .time {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    font-weight: 300;
+    color: var(--brown-mid);
+  }
+
+  /* SECTION SHARED */
+  section { padding: 5rem 3rem; }
+  .section-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--brown-light);
+    margin-bottom: 0.75rem;
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 300;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+  }
+  .section-title em { font-style: italic; color: var(--brown-mid); }
+  .divider { width: 40px; height: 1px; background: var(--brown-light); margin-bottom: 3rem; }
+
+  /* MENU */
+  #menu { background: var(--cream); }
+  .menu-tabs {
+    display: flex; gap: 0; margin-bottom: 2.5rem;
+    border-bottom: 1px solid var(--border-strong);
+  }
+  .menu-tab {
+    padding: 0.6rem 1.5rem;
+    font-size: 0.78rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    border: none;
+    background: transparent;
+    color: var(--text-secondary);
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    transition: all 0.2s;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .menu-tab.active {
+    color: var(--brown-dark);
+    border-bottom-color: var(--brown-dark);
+  }
+
+  .menu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    display: none;
+  }
+  .menu-grid.active { display: grid; }
+
+  .menu-item {
+    background: var(--cream);
+    padding: 1.5rem;
+    transition: background 0.2s;
+  }
+  .menu-item:hover { background: #EDE7D9; }
+
+  .menu-item-name {
+    font-weight: 500;
+    font-size: 0.95rem;
+    margin-bottom: 0.3rem;
+    color: var(--brown-dark);
+  }
+  .menu-item-desc {
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 0.75rem;
+  }
+  .menu-item-price {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem;
+    color: var(--accent);
+  }
+  .menu-item-price::before { content: '฿'; font-size: 0.9rem; }
+
+  /* RESERVE */
+  #reserve { background: var(--warm-white); }
+  .reserve-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: start;
+  }
+  .reserve-info p {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    line-height: 1.9;
+    margin-bottom: 1.5rem;
+  }
+  .reserve-detail {
+    display: flex; flex-direction: column; gap: 0.75rem;
+    margin-top: 2rem;
+  }
+  .reserve-detail-item {
+    display: flex; gap: 1rem; align-items: baseline;
+    font-size: 0.85rem;
+  }
+  .reserve-detail-item .key {
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--brown-light);
+    min-width: 80px;
+  }
+  .reserve-detail-item .val { color: var(--brown-dark); }
+
+  .form-group { margin-bottom: 1.25rem; }
+  .form-group label {
+    display: block;
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    margin-bottom: 0.4rem;
+  }
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    width: 100%;
+    padding: 0.7rem 0;
+    border: none;
+    border-bottom: 1px solid var(--border-strong);
+    background: transparent;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    color: var(--brown-dark);
+    outline: none;
+    transition: border-color 0.2s;
+    font-weight: 300;
+  }
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus { border-bottom-color: var(--brown-dark); }
+  .form-group textarea { resize: vertical; min-height: 70px; }
+
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+
+  .btn-submit {
+    width: 100%;
+    padding: 1rem;
+    background: var(--brown-dark);
+    color: var(--warm-white);
+    border: none;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    cursor: pointer;
+    margin-top: 0.75rem;
+    transition: background 0.2s;
+  }
+  .btn-submit:hover { background: var(--brown-mid); }
+  .btn-submit:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  .form-msg {
+    margin-top: 1rem;
+    padding: 0.75rem 1rem;
+    font-size: 0.85rem;
+    display: none;
+  }
+  .form-msg.success { background: #EAF3DE; color: #3B6D11; display: block; }
+  .form-msg.error { background: #FCEBEB; color: #A32D2D; display: block; }
+
+  /* CONTACT */
+  #contact { background: var(--brown-dark); color: var(--cream); }
+  #contact .section-label { color: var(--brown-light); opacity: 0.7; }
+  #contact .section-title { color: var(--cream); }
+  #contact .divider { background: var(--brown-light); opacity: 0.3; }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3rem;
+    margin-top: 3rem;
+  }
+  .contact-block h3 {
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--brown-light);
+    margin-bottom: 1rem;
+  }
+  .contact-block p,
+  .contact-block a {
+    font-size: 0.9rem;
+    color: rgba(245, 240, 232, 0.75);
+    line-height: 1.9;
+    text-decoration: none;
+    display: block;
+  }
+  .contact-block a:hover { color: var(--cream); }
+
+  .social-links { display: flex; gap: 1.5rem; margin-top: 0.5rem; }
+  .social-links a {
+    font-size: 0.78rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--brown-light);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .social-links a:hover { color: var(--cream); }
+
+  footer {
+    background: var(--brown-dark);
+    border-top: 1px solid rgba(255,255,255,0.06);
+    padding: 1.5rem 3rem;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  footer p { font-size: 0.75rem; color: rgba(245,240,232,0.35); letter-spacing: 0.05em; }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .hero-tag { animation: fadeUp 0.6s ease forwards; }
+  .hero h1 { animation: fadeUp 0.7s 0.1s ease both; }
+  .hero-desc { animation: fadeUp 0.7s 0.2s ease both; }
+  .btn-primary { animation: fadeUp 0.7s 0.3s ease both; }
+  .hero-hours { animation: fadeUp 0.7s 0.4s ease both; }
+
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { gap: 1.5rem; }
+    .hero, section { padding-left: 1.5rem; padding-right: 1.5rem; }
+    .hero::before { width: 0; }
+    .reserve-layout { grid-template-columns: 1fr; gap: 2.5rem; }
+    .contact-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .form-row { grid-template-columns: 1fr; }
+    footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="nav-logo">Sip <span>&amp; Still</span></a>
+  <ul class="nav-links">
+    <li><a href="#menu">เมนู</a></li>
+    <li><a href="#reserve">จองโต๊ะ</a></li>
+    <li><a href="#contact">ติดต่อ</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <p class="hero-tag">Specialty Coffee · Surin</p>
+  <h1>กาแฟคุณเก๋า</br></h1>
+  <p class="hero-desc">
+    กาแฟดีสมควรได้รับเวลา<br>
+    เราคัดสรรเมล็ดพิเศษ ชงด้วยความตั้งใจ<br>
+    ในบรรยากาศที่เงียบสงบและอบอุ่น<br>
+     เพื่อให้ทุกแก้วเป็นมากกว่าการดื่มกาแฟ<br>
+  </p>
+  <a href="#reserve" class="btn-primary">จองโต๊ะ</a>
+  <div class="hero-hours">
+    <div class="label">เปิดบริการ</div>
+    <div class="title">08.00 – 19.00</div>
+    <div style="font-size:0.75rem;color:var(--brown-muted);margin-top:0.2rem">จันทร์ – อาทิตย์</div>
+  </div>
+</section>
+
+<!-- MENU -->
+<section id="menu">
+  <p class="section-label">เมนูของเรา</p>
+  <h2 class="section-title">ทุกแก้ว<br>คือเรื่องราว</br></h2>
+  <div class="divider"></div>
+
+  <div class="menu-tabs">
+    <button class="menu-tab active" data-tab="coffee">กาแฟ</button>
+    <button class="menu-tab" data-tab="non_coffee">ไม่มีคาเฟอีน</button>
+    <button class="menu-tab" data-tab="food">อาหาร</button>
+  </div>
+
+  {% for category, items in menu.items() %}
+  <div class="menu-grid {% if category == 'coffee' %}active{% endif %}" id="tab-{{ category }}">
+    {% for item in items %}
+    <div class="menu-item">
+      <div class="menu-item-name">{{ item.name }}</div>
+      <div class="menu-item-desc">{{ item.desc }}</div>
+      <div class="menu-item-price">{{ item.price }}</div>
+    </div>
+    {% endfor %}
+  </div>
+  {% endfor %}
+</section>
+
+<!-- RESERVE -->
+<section id="reserve">
+  <div class="reserve-layout">
+    <div class="reserve-info">
+      <p class="section-title">จองโต๊ะ</p>
+      <h2 class="section-title">มาใช้เวลาที่ดีกับเรา</br></h2>
+      <div class="divider"></div>
+      <p>จองโต๊ะล่วงหน้าเพื่อประกันที่นั่ง โดยเฉพาะช่วงเสาร์–อาทิตย์และวันหยุดนักขัตฤกษ์ที่ร้านมักเต็มเร็ว</p>
+      <div class="reserve-detail">
+        <div class="reserve-detail-item">
+          <span class="key">โทรศัพท์</span>
+          <span class="val">093-996-0830</span>
+        </div>
+        <div class="reserve-detail-item">
+          <span class="key">เวลาเปิด</span>
+          <span class="val">08.00 – 19.00 น.</span>
+        </div>
+        <div class="reserve-detail-item">
+          <span class="key">ที่อยู่</span>
+          <span class="val">สุรินทร์ ประเทศไทย</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="reserve-form">
+      <div class="form-group">
+        <label>ชื่อ – นามสกุล</label>
+        <input type="text" id="name" placeholder="เช่น สมชาย ใจดี">
+      </div>
+      <div class="form-group">
+        <label>เบอร์โทรศัพท์</label>
+        <input type="tel" id="phone" placeholder="0XX-XXX-XXXX">
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>วันที่</label>
+          <input type="date" id="date">
+        </div>
+        <div class="form-group">
+          <label>เวลา</label>
+          <select id="time">
+            <option value="">เลือกเวลา</option>
+            <option>08:00</option><option>08:30</option>
+            <option>09:00</option><option>09:30</option>
+            <option>10:00</option><option>10:30</option>
+            <option>11:00</option><option>11:30</option>
+            <option>12:00</option><option>12:30</option>
+            <option>13:00</option><option>13:30</option>
+            <option>14:00</option><option>14:30</option>
+            <option>15:00</option><option>15:30</option>
+            <option>16:00</option><option>16:30</option>
+            <option>17:00</option><option>17:30</option>
+            <option>18:00</option><option>18:30</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>จำนวนผู้เข้าใช้บริการ</label>
+        <select id="guests">
+          <option value="1">1 คน</option>
+          <option value="2" selected>2 คน</option>
+          <option value="3">3 คน</option>
+          <option value="4">4 คน</option>
+          <option value="5">5 คน</option>
+          <option value="6">6 คน</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>หมายเหตุ (ถ้ามี)</label>
+        <textarea id="note" placeholder="เช่น ขอมุมหน้าต่าง, วันเกิด, ฯลฯ"></textarea>
+      </div>
+      <button class="btn-submit" id="submitBtn" onclick="submitReservation()">ยืนยันการจอง</button>
+      <div class="form-msg" id="formMsg"></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <p class="section-title">ติดต่อเรา</p>
+  <h2 class="section-title">ยินดีต้อนรับเสมอ</h2>
+  <div class="divider"></div>
+  <div class="contact-grid">
+    <div class="contact-block">
+      <h3>ที่อยู่</h3>
+      <p>123 ถนนตัวอย่าง<br>อำเภอเมือง สุรินทร์ 35000</p>
+    </div>
+    <div class="contact-block">
+      <h3>เวลาทำการ</h3>
+      <p>จันทร์ – ศุกร์: 08.00 – 19.00<br>เสาร์ – อาทิตย์: 08.00 – 20.00</p>
+    </div>
+    <div class="contact-block">
+      <h3>โซเชียลมีเดีย</h3>
+      <div class="social-links">
+        <a href="#">Facebook</a>
+        <a href="#">Instagram</a>
+        <a href="#">Line</a>
+      </div>
+      <p style="margin-top:0.75rem">Tel: 093-996-0830</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2025 Sip & Still Coffee</p>
+  <p>Made with care · Surin, Thailand</p>
+</footer>
+
+<script>
+  // Menu tabs
+  document.querySelectorAll('.menu-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.menu-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.menu-grid').forEach(g => g.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById('tab-' + tab.dataset.tab).classList.add('active');
+    });
+  });
+
+  // Set min date to today
+  const dateInput = document.getElementById('date');
+  const today = new Date().toISOString().split('T')[0];
+  dateInput.min = today;
+
+  async function submitReservation() {
+    const btn = document.getElementById('submitBtn');
+    const msg = document.getElementById('formMsg');
+    const name = document.getElementById('name').value;
+    const phone = document.getElementById('phone').value;
+    const date = document.getElementById('date').value;
+    const time = document.getElementById('time').value;
+    const guests = document.getElementById('guests').value;
+    const note = document.getElementById('note').value;
+
+    msg.className = 'form-msg';
+    msg.style.display = 'none';
+
+    if (!name || !phone || !date || !time) {
+      msg.textContent = 'กรุณากรอกข้อมูลให้ครบทุกช่อง';
+      msg.className = 'form-msg error';
+      return;
+    }
+
+    btn.disabled = true;
+    btn.textContent = 'กำลังบันทึก...';
+
+    try {
+      const res = await fetch('/api/reserve', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, phone, date, time, guests, note })
+      });
+      const data = await res.json();
+      if (data.success) {
+        msg.textContent = data.message;
+        msg.className = 'form-msg success';
+        document.getElementById('name').value = '';
+        document.getElementById('phone').value = '';
+        document.getElementById('date').value = '';
+        document.getElementById('time').value = '';
+        document.getElementById('note').value = '';
+      } else {
+        msg.textContent = data.message;
+        msg.className = 'form-msg error';
+      }
+    } catch (e) {
+      msg.textContent = 'เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง';
+      msg.className = 'form-msg error';
+    }
+
+    btn.disabled = false;
+    btn.textContent = 'ยืนยันการจอง';
+  }
+</script>
+</body>
+</html>
