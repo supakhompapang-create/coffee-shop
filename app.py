@@ -74,4 +74,4 @@ def reserve():
     return jsonify({"success": True, "message": f"จองโต๊ะสำเร็จ! เราจะรอต้อนรับคุณ {name} ในวันที่ {date} เวลา {time} น."})
 
 if __name__ == "__main__":
-    app.run(debug=True, port=5000)
+    app.run(host="0.0.0.0", port=10000)
